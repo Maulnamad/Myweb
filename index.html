@@ -1121,7 +1121,7 @@
         }
 
         /* Garis pemisah hanya muncul di antara sesama item yang tidak aktif */
-        .process-item:not(.is-open) + .process-item:not(.is-open) {
+        .process-item:not(.is-open)+.process-item:not(.is-open) {
             border-top: 1px solid #ECECF0;
         }
 
@@ -1374,21 +1374,71 @@
             font-weight: 400;
         }
 
-        .feedback-cards {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 22px;
-            margin-top: 60px;
+        /* FEEDBACK / REVIEWS CAROUSEL */
+        .feedback-carousel-wrapper {
+            position: relative;
+            margin-top: 55px;
+            width: 100%;
+            overflow: hidden;
+            padding: 15px 0 35px;
+        }
+
+        .feedback-carousel {
+            overflow: visible;
+            width: 100%;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+        }
+
+        .feedback-carousel:active {
+            cursor: grabbing;
+        }
+
+        .feedback-track {
+            display: flex;
+            gap: 28px;
+            align-items: stretch;
+            will-change: transform;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .feedback-card {
-            min-width: 0;
-            min-height: 365px;
+            flex: 0 0 clamp(320px, 35vw, 470px);
+            width: clamp(320px, 35vw, 470px);
+            min-height: 360px;
             display: flex;
             flex-direction: column;
             background: #151515;
             border-radius: 16px;
-            padding: 30px;
+            padding: 32px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-sizing: border-box;
+            opacity: 0.45;
+            transform: scale(0.95);
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feedback-card:hover {
+            opacity: 0.8;
+            transform: scale(0.97);
+        }
+
+        .feedback-card.is-active {
+            opacity: 1;
+            transform: scale(1);
+            border-color: rgba(250, 205, 67, 0.4);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+            cursor: grab;
+        }
+
+        .feedback-carousel:active .feedback-card.is-active {
+            cursor: grabbing;
         }
 
         .feedback-stars {
@@ -1426,13 +1476,15 @@
             border-radius: 50%;
             background: #D9D9D9;
             color: #161123;
-            font-size: 25px;
+            font-size: 22px;
+            font-weight: 700;
         }
 
         .feedback-author strong {
             display: block;
             font-size: 14px;
             font-weight: 700;
+            color: #FFFFFF;
         }
 
         .feedback-author small {
@@ -1735,19 +1787,31 @@
                 font-size: 11px;
             }
 
-            .feedback-cards {
-                grid-template-columns: 1fr;
+            .feedback-carousel-wrapper {
                 margin-top: 35px;
+                padding: 10px 0 20px;
+            }
+
+            .feedback-track {
                 gap: 16px;
             }
 
             .feedback-card {
+                flex: 0 0 clamp(280px, 82vw, 360px);
+                width: clamp(280px, 82vw, 360px);
                 min-height: 0;
-                padding: 25px;
+                padding: 24px;
+                opacity: 0.5;
+                transform: scale(0.96);
+            }
+
+            .feedback-card.is-active {
+                opacity: 1;
+                transform: scale(1);
             }
 
             .feedback-card blockquote {
-                font-size: 16px;
+                font-size: 15px;
             }
 
             .final-contact {
@@ -2165,7 +2229,8 @@
                 <article class="process-item is-open">
                     <button class="process-trigger" type="button" aria-expanded="true">
                         <span class="process-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
                                 <circle cx="11.5" cy="14.5" r="2.5"></circle>
@@ -2175,7 +2240,8 @@
                         <span class="process-info">
                             <strong>Product Discovery & Requirements</strong>
                             <small>
-                                Understanding product requirements, identifying user needs, and translating project briefs into clear design directions.
+                                Understanding product requirements, identifying user needs, and translating project
+                                briefs into clear design directions.
                             </small>
                         </span>
                         <span class="process-number">01</span>
@@ -2208,7 +2274,8 @@
                 <article class="process-item">
                     <button class="process-trigger" type="button" aria-expanded="false">
                         <span class="process-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                 <polyline points="2 17 12 22 22 17"></polyline>
                                 <polyline points="2 12 12 17 22 12"></polyline>
@@ -2217,7 +2284,8 @@
                         <span class="process-info">
                             <strong>User Flows & Wireframing</strong>
                             <small>
-                                Structuring user journeys, information, and interactions before moving into detailed interface design.
+                                Structuring user journeys, information, and interactions before moving into detailed
+                                interface design.
                             </small>
                         </span>
                         <span class="process-number">02</span>
@@ -2249,7 +2317,8 @@
                 <article class="process-item">
                     <button class="process-trigger" type="button" aria-expanded="false">
                         <span class="process-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="6" cy="18" r="3"></circle>
                                 <circle cx="18" cy="6" r="3"></circle>
                                 <path d="M18 9a9 9 0 0 1-9 9"></path>
@@ -2259,7 +2328,8 @@
                         <span class="process-info">
                             <strong>UI & Interaction Design</strong>
                             <small>
-                                Creating clear interfaces, reusable components, and consistent interaction patterns for web and mobile products.
+                                Creating clear interfaces, reusable components, and consistent interaction patterns for
+                                web and mobile products.
                             </small>
                         </span>
                         <span class="process-number">03</span>
@@ -2291,15 +2361,19 @@
                 <article class="process-item">
                     <button class="process-trigger" type="button" aria-expanded="false">
                         <span class="process-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M15 4V2m0 16v-2M8 9h2m10 0h-2m-2.2-4.8l-1.4 1.4m-7.2 7.2l-1.4 1.4m0-10l1.4 1.4m7.2 7.2l1.4 1.4"></path>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161123"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M15 4V2m0 16v-2M8 9h2m10 0h-2m-2.2-4.8l-1.4 1.4m-7.2 7.2l-1.4 1.4m0-10l1.4 1.4m7.2 7.2l1.4 1.4">
+                                </path>
                                 <path d="M4 20l8-8"></path>
                             </svg>
                         </span>
                         <span class="process-info">
                             <strong>Prototyping & Design Handoff</strong>
                             <small>
-                                Connecting screens into interactive prototypes and preparing design specifications for collaboration with development teams.
+                                Connecting screens into interactive prototypes and preparing design specifications for
+                                collaboration with development teams.
                             </small>
                         </span>
                         <span class="process-number">04</span>
@@ -2356,16 +2430,14 @@
                     <span class="experience-date">2022 - Present</span>
                     <h3>Freelancing</h3>
                     <p>
-                        As a UX designer, I work on diverse digital
-                        product types, helping shape meaningful
-                        product experiences from ideas into
-                        usable solutions.
+                        At this time, I started to try something, learn an get a lot of good things. Have client from
+                        many country.
+                    <p>
+                        I start this alone, learning by doing, and see what my mentor do.
                     </p>
                     <p>
-                        I collaborate with teams to understand
-                        product challenges, explore solutions,
-                        and turn complex requirements
-                        into clear experiences.
+                        A lot of lesson that i had, starting face a lot of challenges, getting pressure, stuck,
+                        struggling but it make me stronger, and more happiness.
                     </p>
                 </article>
 
@@ -2373,14 +2445,15 @@
                     <span class="experience-date">2024 - 2026</span>
                     <h3>Teknologi Digital Terdepan</h3>
                     <p>
-                        UI/UX Designer focused on researching,
-                        designing, and improving digital experiences
-                        based on business goals and user needs.
+                        At this time, I started to try something, learn an get a lot of good things. Have client from
+                        many country.
                     </p>
                     <p>
-                        Working across business requirements and
-                        design systems while collaborating with
-                        teams to create functional products.
+                        I start this alone, learning by doing, and see what my mentor do.
+                    </p>
+                    <p>
+                        A lot of lesson that i had, starting face a lot of challenges, getting pressure, stuck,
+                        struggling but it make me stronger, and more happiness.
                     </p>
                 </article>
 
@@ -2388,9 +2461,13 @@
                     <span class="experience-date">2020 - 2024</span>
                     <h3>Assistance UI/UX</h3>
                     <p>
-                        Developing a stronger foundation in
-                        user-centered problem solving,
-                        interface design, and product thinking.
+                        After learning extensively from my mentor, I worked as an assistant designer for him, supporting
+                        various UI/X design tasks.
+                    </p>
+                    <p>
+                        My responsibilities included translating client requirements into clear design briefs, creating
+                        user flows and wireframes, explaining interaction logic, and continuing the process into UI
+                        design and interactive prototyping.
                     </p>
                 </article>
 
@@ -2398,9 +2475,13 @@
                     <span class="experience-date">2019 - 2020</span>
                     <h3>Starting</h3>
                     <p>
-                        Researching, learning, and practicing
-                        design fundamentals while discovering
-                        the possibilities of digital products.
+                        Basically, I started my journey in graphic design in mid-2017, where I began learning how the
+                        creative industry works. Later, I transitioned into UI/UX design at 2019, a field that truly
+                        excited me because it introduced many new lessons and perspectives.
+                    </p>
+                    <p>
+                        Along the way, I met someone who taught me more than just design skills, but also valuable life
+                        lessons.
                     </p>
                 </article>
 
@@ -2432,65 +2513,178 @@
                     <span>Collaboration Rating</span>
                 </div>
             </div>
+        </div>
 
-            <div class="feedback-cards">
+        <div class="feedback-carousel-wrapper">
+                <div class="feedback-carousel" id="feedbackCarousel" aria-label="Customer Testimonials Carousel">
+                    <div class="feedback-track" id="feedbackTrack">
 
-                <!-- TESTIMONIAL 01 -->
-                <article class="feedback-card">
-                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <blockquote>
-                        Very knowledgeable. He listened very well
-                        and I definitely would recommend
-                        working with him again.
-                    </blockquote>
-                    <div class="feedback-author">
-                        <div class="feedback-avatar">C</div>
-                        <div>
-                            <strong>Customer</strong>
-                            <small>Client Review</small>
-                        </div>
+                        <!-- TESTIMONIAL 01 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                Very knowledgeable. He listened very well
+                                and I definitely would recommend
+                                working with him again.
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">C</div>
+                                <div>
+                                    <strong>Customer</strong>
+                                    <small>Client Review</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 02 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                He is all about finding a solution for all
+                                your requirements. Very proactive.
+                                Very committed. Very good quality work.
+                                Only good things to say about his work.
+                                I will work with him again.
+                                Highly recommended.
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">K</div>
+                                <div>
+                                    <strong>Kamal Raj</strong>
+                                    <small>Nuptist</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 03 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                One of the best UI/UX designers.
+                                Always available, always motivated,
+                                and willing to make changes,
+                                even in a critical emergency situation.
+                                Rockstar Ahmad!
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">C</div>
+                                <div>
+                                    <strong>Christian Kai</strong>
+                                    <small>Crypto Group</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 04 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                Outstanding design skills and attention to detail.
+                                He completely overhauled our user onboarding flow,
+                                boosting our conversion rates by 35%.
+                                Will definitely collaborate on future sprints!
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">S</div>
+                                <div>
+                                    <strong>Sarah Jenkins</strong>
+                                    <small>FinTech Labs</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 05 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                Working with him was seamless. Not only does he
+                                produce beautiful, clean interfaces, but he also
+                                deeply understands product logic and user psychology.
+                                A rare and valuable combination!
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">M</div>
+                                <div>
+                                    <strong>Marcus Vance</strong>
+                                    <small>Nexa Protocol</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 06 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                Exceptional work ethic and super fast turnarounds.
+                                He took our rough wireframes and turned them into
+                                a world-class design system that our developers
+                                genuinely loved building.
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">E</div>
+                                <div>
+                                    <strong>Elena Rostova</strong>
+                                    <small>BrandPulse Studio</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 07 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                He transformed our complex AI dashboard into an
+                                intuitive, elegant experience. Our enterprise
+                                customers constantly praise the new UI.
+                                Highly recommended designer!
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">D</div>
+                                <div>
+                                    <strong>David Kim</strong>
+                                    <small>Zenith AI</small>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- TESTIMONIAL 08 -->
+                        <article class="feedback-card">
+                            <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                            <blockquote>
+                                Brilliant creative thinking and fantastic communication.
+                                Every feedback cycle was addressed immediately with
+                                precision and care. He truly cares about the final product.
+                            </blockquote>
+                            <div class="feedback-author">
+                                <div class="feedback-avatar">P</div>
+                                <div>
+                                    <strong>Priya Sharma</strong>
+                                    <small>CloudScale</small>
+                                </div>
+                            </div>
+                        </article>
+
                     </div>
-                </article>
+                </div>
 
-                <!-- TESTIMONIAL 02 -->
-                <article class="feedback-card">
-                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <blockquote>
-                        He is all about finding a solution for all
-                        your requirements. Very proactive.
-                        Very committed. Very good quality work.
-                        Only good things to say about his work.
-                        I will work with him again.
-                        Highly recommended.
-                    </blockquote>
-                    <div class="feedback-author">
-                        <div class="feedback-avatar">C</div>
-                        <div>
-                            <strong>Kamal Raj</strong>
-                            <small>Nuptist</small>
-                        </div>
-                    </div>
-                </article>
+                <!-- CAROUSEL CONTROLS -->
+                <div class="feedback-controls">
+                    <button class="feedback-nav-btn feedback-nav-prev" id="feedbackPrevBtn" aria-label="Previous Testimonials">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
 
-                <!-- TESTIMONIAL 03 -->
-                <article class="feedback-card">
-                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <blockquote>
-                        One of the best UI/UX designers.
-                        Always available, always motivated,
-                        and willing to make changes,
-                        even in a critical emergency situation.
-                        Rockstar Ahmad!
-                    </blockquote>
-                    <div class="feedback-author">
-                        <div class="feedback-avatar">C</div>
-                        <div>
-                            <strong>Christian Kai</strong>
-                            <small>Crypto Group</small>
-                        </div>
-                    </div>
-                </article>
+                    <div class="feedback-indicators" id="feedbackIndicators" aria-label="Testimonial indicators"></div>
 
+                    <button class="feedback-nav-btn feedback-nav-next" id="feedbackNextBtn" aria-label="Next Testimonials">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -2607,6 +2801,252 @@
                 activateProcessItem(item);
             });
         });
+    </script>
+
+    <script>
+        (function initFeedbackCarousel() {
+            const carousel = document.getElementById("feedbackCarousel");
+            const track = document.getElementById("feedbackTrack");
+            const prevBtn = document.getElementById("feedbackPrevBtn");
+            const nextBtn = document.getElementById("feedbackNextBtn");
+            const indicatorsContainer = document.getElementById("feedbackIndicators");
+
+            if (!carousel || !track) return;
+
+            const originalCards = Array.from(track.children);
+            const totalOriginal = originalCards.length;
+            if (totalOriginal === 0) return;
+
+            // Clone sets before and after for seamless infinite loop
+            const beforeFragment = document.createDocumentFragment();
+            originalCards.forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.setAttribute("aria-hidden", "true");
+                clone.classList.add("is-clone");
+                beforeFragment.appendChild(clone);
+            });
+            track.insertBefore(beforeFragment, originalCards[0]);
+
+            const afterFragment = document.createDocumentFragment();
+            originalCards.forEach(card => {
+                const clone = card.cloneNode(true);
+                clone.setAttribute("aria-hidden", "true");
+                clone.classList.add("is-clone");
+                afterFragment.appendChild(clone);
+            });
+            track.appendChild(afterFragment);
+
+            // Create indicator dots for original slides
+            indicatorsContainer.innerHTML = "";
+            for (let i = 0; i < totalOriginal; i++) {
+                const dot = document.createElement("button");
+                dot.className = `feedback-dot ${i === 0 ? "active" : ""}`;
+                dot.setAttribute("type", "button");
+                dot.setAttribute("aria-label", `Review ${i + 1} of ${totalOriginal}`);
+                dot.addEventListener("click", () => {
+                    const currentReal = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal;
+                    const diff = i - currentReal;
+                    currentIndex += diff;
+                    setPosition(currentIndex, true);
+                });
+                indicatorsContainer.appendChild(dot);
+            }
+
+            let currentIndex = totalOriginal; // Start on first real card (Set B)
+            let isDragging = false;
+            let isPointerDown = false;
+            let startX = 0;
+            let dragDistance = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+
+            function updateCardLayout() {
+                const containerWidth = carousel.clientWidth;
+                const isMobile = window.innerWidth <= 767;
+                const isTablet = window.innerWidth > 767 && window.innerWidth <= 1024;
+                const visibleCount = isMobile ? 1 : (isTablet ? 2 : 3);
+                const gap = isMobile ? 16 : 22;
+
+                let cardWidth;
+                if (isMobile) {
+                    cardWidth = Math.min(containerWidth - 28, 420);
+                } else {
+                    cardWidth = (containerWidth - (gap * (visibleCount - 1))) / visibleCount;
+                }
+
+                const allCards = track.querySelectorAll(".feedback-card");
+                allCards.forEach(card => {
+                    card.style.width = `${cardWidth}px`;
+                    card.style.flex = `0 0 ${cardWidth}px`;
+                });
+            }
+
+            function getStep() {
+                const firstCard = track.querySelector(".feedback-card");
+                if (!firstCard) return 0;
+                const cardWidth = firstCard.getBoundingClientRect().width;
+                const style = window.getComputedStyle(track);
+                const gap = parseFloat(style.gap) || 22;
+                return cardWidth + gap;
+            }
+
+            function setPosition(index, animated = true) {
+                const step = getStep();
+                currentTranslate = -index * step;
+                prevTranslate = currentTranslate;
+
+                if (animated) {
+                    track.style.transition = "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+                } else {
+                    track.style.transition = "none";
+                }
+
+                track.style.transform = `translateX(${currentTranslate}px)`;
+                updateIndicators(index);
+            }
+
+            function updateIndicators(index) {
+                const realIndex = ((index % totalOriginal) + totalOriginal) % totalOriginal;
+                const dots = indicatorsContainer.querySelectorAll(".feedback-dot");
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle("active", idx === realIndex);
+                });
+            }
+
+            function nextSlide() {
+                currentIndex++;
+                setPosition(currentIndex, true);
+            }
+
+            function prevSlide() {
+                currentIndex--;
+                setPosition(currentIndex, true);
+            }
+
+            // Seamless infinite loop wrap on transition completion
+            track.addEventListener("transitionend", () => {
+                if (currentIndex >= totalOriginal * 2) {
+                    currentIndex -= totalOriginal;
+                    setPosition(currentIndex, false);
+                } else if (currentIndex < totalOriginal) {
+                    currentIndex += totalOriginal;
+                    setPosition(currentIndex, false);
+                }
+            });
+
+            // Pointer / Mouse Drag / Touch Swipe interaction
+            carousel.addEventListener("pointerdown", (e) => {
+                if (e.target.closest("button")) return;
+
+                isPointerDown = true;
+                isDragging = false;
+                startX = e.clientX;
+                dragDistance = 0;
+                track.style.transition = "none";
+                carousel.style.cursor = "grabbing";
+
+                try {
+                    carousel.setPointerCapture(e.pointerId);
+                } catch (_) {}
+            });
+
+            carousel.addEventListener("pointermove", (e) => {
+                if (!isPointerDown) return;
+
+                const currentX = e.clientX;
+                dragDistance = currentX - startX;
+
+                if (Math.abs(dragDistance) > 6) {
+                    isDragging = true;
+                }
+
+                currentTranslate = prevTranslate + dragDistance;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            });
+
+            function endDrag(e) {
+                if (!isPointerDown) return;
+                isPointerDown = false;
+                carousel.style.cursor = "grab";
+
+                try {
+                    if (e && e.pointerId && carousel.hasPointerCapture(e.pointerId)) {
+                        carousel.releasePointerCapture(e.pointerId);
+                    }
+                } catch (_) {}
+
+                const step = getStep();
+                const threshold = Math.max(45, step * 0.12);
+
+                if (isDragging) {
+                    const cardsMoved = Math.round(dragDistance / step);
+                    if (Math.abs(dragDistance) > threshold) {
+                        if (cardsMoved !== 0) {
+                            currentIndex -= cardsMoved;
+                        } else {
+                            currentIndex += dragDistance < 0 ? 1 : -1;
+                        }
+                    }
+                    setPosition(currentIndex, true);
+                } else {
+                    // Click on a card directly navigates to it
+                    const clickedCard = e.target.closest(".feedback-card");
+                    if (clickedCard) {
+                        const allCards = Array.from(track.children);
+                        const clickedIndex = allCards.indexOf(clickedCard);
+                        if (clickedIndex !== -1 && clickedIndex !== currentIndex) {
+                            currentIndex = clickedIndex;
+                            setPosition(currentIndex, true);
+                        }
+                    } else {
+                        setPosition(currentIndex, true);
+                    }
+                }
+
+                isDragging = false;
+            }
+
+            carousel.addEventListener("pointerup", endDrag);
+            carousel.addEventListener("pointercancel", endDrag);
+
+            // Prevent unwanted browser image/text ghost dragging
+            carousel.addEventListener("dragstart", (e) => e.preventDefault());
+
+            // Arrow buttons click
+            if (nextBtn) nextBtn.addEventListener("click", nextSlide);
+            if (prevBtn) prevBtn.addEventListener("click", prevSlide);
+
+            // Keyboard navigation
+            carousel.setAttribute("tabindex", "0");
+            carousel.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    prevSlide();
+                } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    nextSlide();
+                }
+            });
+
+            // Window resize handler
+            let resizeTimer;
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    updateCardLayout();
+                    setPosition(currentIndex, false);
+                }, 80);
+            });
+
+            // Initial positioning
+            updateCardLayout();
+            setPosition(currentIndex, false);
+
+            window.addEventListener("load", () => {
+                updateCardLayout();
+                setPosition(currentIndex, false);
+            });
+        })();
     </script>
 
 </body>
