@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maul — Product Designer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #161123;
+            --yellow: #FACD43;
+            --text-gray: #55515F;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--white);
+            color: var(--primary);
+            font-family: "DM Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        /* SHARED CONTAINER */
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .logo {
+            position: relative;
+            width: 44px;
+            height: 50px;
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .logo-bar {
+            display: block;
+            width: 12px;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .logo-bar:first-child {
+            height: 48px;
+        }
+
+        .logo-bar:nth-child(2) {
+            height: 30px;
+        }
+
+        .logo-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--yellow);
+            top: 0;
+            right: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 500;
+            color: #57535F;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .availability {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2DC968;
+        }
+
+        .contact-btn {
+            background: var(--primary);
+            color: var(--yellow);
+            border-radius: 40px;
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            white-space: nowrap;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 720px;
+            position: relative;
+            padding-top: 100px;
+            padding-bottom: 90px;
+            background: #FFFFFF;
+        }
+
+        /* IMPORTANT:
+       No SVG decorative lines,
+       no background circles,
+       no background pseudo-elements.
+    */
+
+        .hero-layout {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.25fr 0.85fr;
+            column-gap: 50px;
+        }
+
+        .hero-left {
+            min-width: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(56px, 6.4vw, 98px);
+            line-height: 1.02;
+            letter-spacing: -0.065em;
+            font-weight: 800;
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .highlight {
+            position: relative;
+            white-space: nowrap;
+            z-index: 0;
+        }
+
+        .highlight::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 21%;
+            bottom: 8%;
+            z-index: -1;
+            background: var(--yellow);
+            transform: rotate(-1deg);
+        }
+
+        .hero-description {
+            max-width: 650px;
+            margin-top: 24px;
+            margin-bottom: 0;
+            color: var(--text-gray);
+            font-size: 17px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            margin-top: 72px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 13px 26px;
+            min-height: 46px;
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--yellow);
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* RIGHT HERO */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 0;
+        }
+
+        .intro-badge {
+            border: 1px solid var(--yellow);
+            padding: 11px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            align-self: flex-end;
+        }
+
+        .hero-note {
+            margin-top: auto;
+            text-align: right;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .hero-note h2 {
+            font-size: 17px;
+            line-height: 1.35;
+            font-weight: 700;
+            margin: 0 0 12px;
+            text-align: right;
+        }
+
+        .hero-note p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-gray);
+            margin: 0 0 0 auto;
+            max-width: 430px;
+            text-align: right;
+        }
+
+        .note-tags {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            min-height: 46px;
+            align-items: center;
+        }
+
+        .note-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--yellow);
+            border-radius: 50px;
+            padding: 11px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+            cursor: default;
+        }
+
+        /* TABLET */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 20px;
+            }
+
+            .availability {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 75px;
+                min-height: 680px;
+            }
+
+            .hero-layout {
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 25px;
+            }
+
+            .hero-title {
+                font-size: clamp(50px, 6.5vw, 76px);
+            }
+
+            .hero-note {
+                margin-top: auto;
+            }
+
+            .intro-badge {
+                white-space: normal;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 767px) {
+            .navbar {
+                min-height: 80px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 76px;
+                left: 20px;
+                right: 20px;
+                padding: 24px;
+                background: white;
+                border: 1px solid #EEEEEE;
+                border-radius: 16px;
+                z-index: 20;
+                flex-direction: column;
+                align-items: flex-start;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+
+            .contact-btn {
+                padding: 11px 16px;
+                font-size: 12px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 55px;
+                padding-bottom: 80px;
+            }
+
+            .hero-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 60px;
+            }
+
+            .hero-title {
+                font-size: clamp(43px, 10vw, 64px);
+                line-height: 1.07;
+                letter-spacing: -0.06em;
+            }
+
+            .hero-description {
+                margin-top: 25px;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .hero-actions {
+                margin-top: 35px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+
+            .hero-right {
+                align-items: flex-start;
+            }
+
+            .intro-badge {
+                align-self: flex-start;
+                font-size: 12px;
+            }
+
+            .hero-note {
+                margin-top: 45px;
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .hero-note h2 {
+                text-align: left;
+            }
+
+            .hero-note p {
+                margin-left: 0;
+                text-align: left;
+            }
+
+            .note-tags {
+                justify-content: flex-start;
+                min-height: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .btn {
+                transition: none;
+            }
+        }
+
+
+        .selected-work {
+            width: 100%;
+            background: #FFFFFF;
+            padding: 70px 0 110px;
+            color: #161123;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        /* NO DECORATIVE BACKGROUND */
+        .selected-work::before,
+        .selected-work::after {
+            content: none;
+        }
+
+        .work-container {
+            max-width: 1180px;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .work-header {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            align-items: end;
+            gap: 60px;
+            margin-bottom: 38px;
+        }
+
+        .work-eyebrow {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #161123;
+            margin-bottom: 12px;
+        }
+
+        .work-heading h2 {
+            font-size: clamp(32px, 3.5vw, 48px);
+            line-height: 1.13;
+            letter-spacing: -0.055em;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .work-intro {
+            max-width: 380px;
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #55515F;
+        }
+
+        /* PROJECT GRID */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        /* PROJECT CARD */
+        .work-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 26px 24px 0;
+            background: #FFFFFF;
+            border: 1px solid #E9E9EF;
+            border-radius: 24px;
+            overflow: hidden;
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .work-card:hover {
+            border-color: #D5D2DE;
+            box-shadow: 0 12px 32px rgba(22, 17, 35, .05);
+            transform: translateY(-3px);
+        }
+
+        /* CARD TITLE */
+        .work-card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            margin-bottom: 10px;
+        }
+
+        .work-card-heading h3 {
+            margin: 0;
+            font-size: 20px;
+            line-height: 1.3;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+        }
+
+        .work-category {
+            font-size: 13px;
+            font-weight: 600;
+            color: #E3AD18;
+        }
+
+        /* CARD DESCRIPTION */
+        .work-summary {
+            margin: 0 0 22px;
+            color: #55515F;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .work-description {
+            margin: 0;
+            color: #55515F;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        /* PROJECT IMAGES */
+        .work-images {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            align-items: end;
+            margin-top: auto;
+            padding-top: 32px;
+            height: 245px;
+            overflow: hidden;
+        }
+
+        .work-images img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+        }
+
+        /* =====================================
+   TABLET
+===================================== */
+
+        @media (max-width: 1024px) {
+            .selected-work {
+                padding: 65px 0 90px;
+            }
+
+            .work-header {
+                gap: 32px;
+            }
+
+            .work-grid {
+                gap: 16px;
+            }
+
+            .work-card {
+                padding: 22px 20px 0;
+            }
+
+            .work-images {
+                height: 210px;
+            }
+        }
+
+        /* =====================================
+   MOBILE
+===================================== */
+
+        @media (max-width: 767px) {
+            .selected-work {
+                padding: 50px 0 80px;
+            }
+
+            .work-header {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+
+            .work-heading h2 {
+                font-size: clamp(30px, 8vw, 40px);
+            }
+
+            .work-intro {
+                font-size: 14px;
+                max-width: 100%;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .work-card {
+                border-radius: 20px;
+                padding: 22px 20px 0;
+            }
+
+            .work-card-heading h3 {
+                font-size: 19px;
+            }
+
+            .work-category {
+                font-size: 12px;
+            }
+
+            .work-summary {
+                font-size: 13px;
+                margin-bottom: 18px;
+            }
+
+            .work-description {
+                font-size: 13px;
+            }
+
+            .work-images {
+                height: 220px;
+                padding-top: 24px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .work-images {
+                height: 180px;
+            }
+
+            .work-card {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .work-card {
+                transition: none;
+            }
+
+            .work-card:hover {
+                transform: none;
+            }
+        }
+
+
+        /* ========================================
+   SECTION 03 — ABOUT ME
+========================================= */
+
+        .about-section {
+            position: relative;
+            width: 100%;
+            background: #000000;
+            color: #FFFFFF;
+            padding: 100px 0 0;
+            margin: 0;
+            overflow: hidden;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        /* REMOVE ALL BACKGROUND DECORATIONS */
+        .about-section::before,
+        .about-section::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .about-container {
+            width: 100%;
+            max-width: 1512px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        /* ========================================
+   ABOUT CONTENT
+========================================= */
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-eyebrow {
+            display: block;
+            color: #FACD43;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 28px;
+            line-height: 1.4;
+        }
+
+        .about-title {
+            font-size: clamp(32px, 4vw, 58px);
+            line-height: 1.12;
+            letter-spacing: -0.055em;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin: 0 0 22px;
+        }
+
+        .about-subtitle {
+            max-width: 790px;
+            margin: 0 auto 18px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.65;
+            color: #F1F1F1;
+        }
+
+        .about-description {
+            max-width: 930px;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 400;
+            color: #B8B8B8;
+        }
+
+        /* ========================================
+   ABOUT CTA BUTTON
+========================================= */
+
+        .about-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+
+            min-height: 48px;
+            margin-top: 36px;
+            padding: 13px 30px;
+
+            background: #FACD43;
+            color: #161123;
+            border: 1px solid #FACD43;
+            border-radius: 50px;
+
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .about-cta:hover {
+            background: #F5BD25;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+   SHOWCASE
+========================================= */
+
+        .about-showcase {
+            position: relative;
+            width: 100%;
+            margin-top: 90px;
+        }
+
+        /* LARGE GRAY SHOWCASE */
+        .about-showcase-canvas {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2.25 / 1;
+            min-height: 420px;
+
+            background: #D9D9D9;
+
+            border: none;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        /* ========================================
+   SHOWCASE BUTTONS
+========================================= */
+
+        .about-showcase-actions {
+            position: absolute;
+            left: 50%;
+            bottom: 45px;
+            transform: translateX(-50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            width: max-content;
+            max-width: calc(100% - 30px);
+        }
+
+        .about-showcase-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 12px 21px;
+
+            background: #161123;
+            color: #FACD43;
+            border-radius: 50px;
+            border: none;
+
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .about-showcase-button:hover {
+            background: #2D2544;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+   TABLET RESPONSIVE
+========================================= */
+
+        @media (max-width: 1024px) {
+
+            .about-section {
+                padding-top: 80px;
+            }
+
+            .about-container {
+                padding: 0 32px;
+            }
+
+            .about-title {
+                font-size: clamp(34px, 4.6vw, 48px);
+            }
+
+            .about-subtitle {
+                font-size: 16px;
+            }
+
+            .about-description {
+                font-size: 14px;
+            }
+
+            .about-showcase {
+                margin-top: 70px;
+            }
+
+            .about-showcase-canvas {
+                min-height: 340px;
+            }
+
+            .about-showcase-actions {
+                bottom: 30px;
+            }
+
+        }
+
+        /* ========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+        @media (max-width: 767px) {
+
+            .about-section {
+                padding-top: 75px;
+            }
+
+            .about-container {
+                padding: 0 20px;
+            }
+
+            .about-eyebrow {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .about-title {
+                font-size: clamp(30px, 8vw, 40px);
+                line-height: 1.18;
+                letter-spacing: -0.05em;
+                margin-bottom: 20px;
+            }
+
+            .about-title br {
+                display: none;
+            }
+
+            .about-subtitle {
+                font-size: 14px;
+                line-height: 1.65;
+                margin-bottom: 15px;
+            }
+
+            .about-description {
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            .about-cta {
+                margin-top: 28px;
+                font-size: 13px;
+                padding: 12px 25px;
+            }
+
+            .about-showcase {
+                margin-top: 55px;
+            }
+
+            .about-showcase-canvas {
+                min-height: 300px;
+                aspect-ratio: auto;
+            }
+
+            .about-showcase-actions {
+                bottom: 24px;
+                gap: 8px;
+                width: calc(100% - 24px);
+            }
+
+            .about-showcase-button {
+                padding: 10px 14px;
+                font-size: 11px;
+                gap: 6px;
+            }
+
+        }
+
+        /* SMALL MOBILE */
+        @media (max-width: 375px) {
+
+            .about-showcase-button {
+                font-size: 10px;
+                padding: 9px 11px;
+            }
+
+            .about-showcase-canvas {
+                min-height: 260px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .about-cta,
+            .about-showcase-button {
+                transition: none;
+            }
+
+            .about-cta:hover,
+            .about-showcase-button:hover {
+                transform: none;
+            }
+        }
+
+        /* =========================================
+   SHARED STYLES — SECTIONS 04–08
+========================================= */
+
+        .remaining-container {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .remaining-eyebrow {
+            display: block;
+            color: #161123;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        /* =========================================
+   04 — DESIGN PROCESS
+========================================= */
+
+        .process-section {
+            background: #FFFFFF;
+            padding: 110px 0 80px;
+            color: #161123;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        .process-header {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            align-items: end;
+            gap: 70px;
+            margin-bottom: 42px;
+        }
+
+        .process-header h2 {
+            font-size: clamp(34px, 3.5vw, 48px);
+            font-weight: 800;
+            letter-spacing: -0.055em;
+            line-height: 1.13;
+            margin: 0;
+        }
+
+        .process-header>p {
+            margin: 0;
+            color: #55515F;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .process-item {
+            border: 1px solid transparent;
+            border-radius: 20px;
+            background: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .process-item.is-open {
+            border-color: #ECECF0;
+            box-shadow: 0 10px 35px rgba(22, 17, 35, .035);
+        }
+
+        .process-trigger {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 16px;
+            padding: 19px 14px;
+            border: none;
+            background: transparent;
+            color: #161123;
+            text-align: left;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .process-trigger:focus-visible {
+            outline: 2px solid #FACD43;
+            outline-offset: -3px;
+        }
+
+        .process-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            background: #FACD43;
+            display: grid;
+            place-items: center;
+            color: #161123;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .process-info {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .process-info strong {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .process-info small {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #696570;
+        }
+
+        .process-number {
+            color: #E4AC17;
+            font-size: 15px;
+            font-weight: 600;
+            align-self: flex-start;
+            margin-top: 7px;
+        }
+
+        .process-panel {
+            padding: 0 20px 26px;
+        }
+
+        .process-panel[hidden] {
+            display: none;
+        }
+
+        .process-images {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .process-images img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1.35;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .process-panel p {
+            font-size: 13px;
+            color: #55515F;
+            line-height: 1.7;
+            margin: 10px 0 0;
+        }
+
+        /* =========================================
+   05 — EXPERIENCE
+========================================= */
+
+        .experience-section {
+            background: #FFFFFF;
+            color: #161123;
+            padding: 75px 0 115px;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        .experience-layout {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 100px;
+            border-top: 1px solid #E7E7EC;
+            padding-top: 90px;
+        }
+
+        .experience-intro h2 {
+            font-size: clamp(34px, 3.3vw, 47px);
+            line-height: 1.1;
+            letter-spacing: -0.055em;
+            font-weight: 800;
+            margin: 12px 0 22px;
+        }
+
+        .experience-intro p {
+            max-width: 350px;
+            color: #625F67;
+            font-size: 15px;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .experience-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .experience-item {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .experience-item::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FACD43;
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+
+        .experience-date {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #161123;
+        }
+
+        .experience-item h3 {
+            font-size: 20px;
+            letter-spacing: -0.03em;
+            font-weight: 700;
+            margin: 14px 0 10px;
+        }
+
+        .experience-item p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #625F67;
+            margin: 0 0 13px;
+            max-width: 620px;
+        }
+
+        /* =========================================
+   06 — FEEDBACK / REVIEWS
+========================================= */
+
+        .feedback-section {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 105px 0 120px;
+            font-family: "DM Sans", sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* NO DECORATIVE BACKGROUND LINES */
+        .feedback-section::before,
+        .feedback-section::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .feedback-label {
+            color: #FACD43;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 42px;
+        }
+
+        .feedback-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            padding-bottom: 55px;
+            border-bottom: 1px solid #292929;
+        }
+
+        .feedback-stat {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .feedback-stat strong {
+            color: #FACD43;
+            font-size: clamp(52px, 7vw, 100px);
+            letter-spacing: -0.065em;
+            line-height: 1;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .feedback-stat span {
+            font-size: 15px;
+            color: #BCBCBC;
+            font-weight: 400;
+        }
+
+        .feedback-cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            margin-top: 60px;
+        }
+
+        .feedback-card {
+            min-width: 0;
+            min-height: 365px;
+            display: flex;
+            flex-direction: column;
+            background: #151515;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .feedback-stars {
+            color: #FACD43;
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-bottom: 22px;
+        }
+
+        .feedback-card blockquote {
+            flex: 1;
+            margin: 0;
+            padding-bottom: 25px;
+            font-size: 17px;
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.65;
+            color: #FFFFFF;
+        }
+
+        .feedback-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #383838;
+            padding-top: 22px;
+        }
+
+        .feedback-avatar {
+            display: grid;
+            place-items: center;
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #D9D9D9;
+            color: #161123;
+            font-size: 25px;
+        }
+
+        .feedback-author strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .feedback-author small {
+            display: block;
+            font-size: 12px;
+            color: #9E9E9E;
+            margin-top: 4px;
+        }
+
+        /* =========================================
+   07 — CONTACT
+========================================= */
+
+        .final-contact {
+            width: 100%;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 135px 0 115px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        /* NO CIRCLES OR BACKGROUND SVG */
+        .final-contact::before,
+        .final-contact::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .final-contact-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .final-contact h2 {
+            font-size: clamp(48px, 7vw, 96px);
+            line-height: 1.05;
+            letter-spacing: -0.075em;
+            font-weight: 800;
+            margin: 24px 0;
+        }
+
+        .final-contact p {
+            font-size: 15px;
+            color: #625F67;
+            line-height: 1.65;
+            max-width: 650px;
+            margin: 0 0 30px;
+        }
+
+        .final-contact-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .final-contact-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 46px;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform .2s ease;
+        }
+
+        .final-contact-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .final-contact-button.email {
+            background: #161123;
+            color: #FFFFFF;
+        }
+
+        .final-contact-button.whatsapp {
+            background: #20CF75;
+            color: #07180F;
+        }
+
+        /* =========================================
+   08 — FOOTER
+========================================= */
+
+        .portfolio-footer {
+            width: 100%;
+            background: #FFFFFF;
+            color: #161123;
+            padding: 28px 0 35px;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .footer-links a,
+        .footer-links span,
+        .footer-credit {
+            font-size: 12px;
+            color: #5F5C65;
+        }
+
+        .footer-links a:hover {
+            color: #161123;
+        }
+
+        /* =========================================
+   TABLET
+========================================= */
+
+        @media (max-width: 1024px) {
+
+            .process-section {
+                padding-top: 85px;
+            }
+
+            .experience-layout {
+                gap: 45px;
+                padding-top: 75px;
+            }
+
+            .feedback-stat strong {
+                font-size: clamp(47px, 6.5vw, 80px);
+            }
+
+            .feedback-card {
+                padding: 22px;
+            }
+
+            .feedback-card blockquote {
+                font-size: 15px;
+            }
+
+            .final-contact {
+                padding-top: 100px;
+            }
+        }
+
+        /* =========================================
+   MOBILE
+========================================= */
+
+        @media (max-width: 767px) {
+
+            .process-section {
+                padding: 70px 0 55px;
+            }
+
+            .process-header {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+
+            .process-header h2 {
+                font-size: 32px;
+            }
+
+            .process-header h2 br {
+                display: none;
+            }
+
+            .process-header>p {
+                font-size: 14px;
+            }
+
+            .process-trigger {
+                gap: 12px;
+                padding: 16px 10px;
+            }
+
+            .process-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 19px;
+            }
+
+            .process-info strong {
+                font-size: 14px;
+            }
+
+            .process-info small {
+                font-size: 12px;
+            }
+
+            .process-number {
+                font-size: 12px;
+            }
+
+            .process-panel {
+                padding: 0 14px 22px;
+            }
+
+            .process-images {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .experience-section {
+                padding: 45px 0 85px;
+            }
+
+            .experience-layout {
+                grid-template-columns: 1fr;
+                gap: 45px;
+                padding-top: 65px;
+            }
+
+            .experience-intro h2 {
+                font-size: 36px;
+            }
+
+            .experience-intro p {
+                font-size: 14px;
+            }
+
+            .experience-timeline {
+                gap: 35px;
+            }
+
+            .experience-item h3 {
+                font-size: 18px;
+            }
+
+            .experience-item p {
+                font-size: 13px;
+            }
+
+            .feedback-section {
+                padding: 80px 0 85px;
+            }
+
+            .feedback-label {
+                margin-bottom: 36px;
+            }
+
+            .feedback-stats {
+                gap: 8px;
+                padding-bottom: 35px;
+            }
+
+            .feedback-stat {
+                gap: 10px;
+            }
+
+            .feedback-stat strong {
+                font-size: clamp(27px, 8.5vw, 52px);
+            }
+
+            .feedback-stat span {
+                font-size: 11px;
+            }
+
+            .feedback-cards {
+                grid-template-columns: 1fr;
+                margin-top: 35px;
+                gap: 16px;
+            }
+
+            .feedback-card {
+                min-height: 0;
+                padding: 25px;
+            }
+
+            .feedback-card blockquote {
+                font-size: 16px;
+            }
+
+            .final-contact {
+                padding: 90px 0 75px;
+            }
+
+            .final-contact h2 {
+                font-size: clamp(40px, 10vw, 65px);
+                margin: 18px 0;
+            }
+
+            .final-contact h2 br {
+                display: none;
+            }
+
+            .final-contact p {
+                font-size: 13px;
+            }
+
+            .final-contact-button {
+                font-size: 12px;
+                padding: 12px 18px;
+            }
+
+            .portfolio-footer {
+                padding: 22px 0 30px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 18px;
+            }
+
+            .footer-links {
+                justify-content: center;
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .feedback-stat strong {
+                font-size: 27px;
+            }
+
+            .feedback-stat span {
+                font-size: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .final-contact-button {
+                transition: none;
+            }
+
+            .final-contact-button:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="container navbar" id="home">
+
+        <a href="#home" class="logo" aria-label="Home">
+            <span class="logo-bar"></span>
+            <span class="logo-bar"></span>
+            <span class="logo-dot"></span>
+        </a>
+
+        <nav class="nav-links" id="navigation">
+            <a href="#home" class="active">Home</a>
+            <a href="#work">Work</a>
+            <a href="#process">Studycase</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-right">
+            <div class="availability">
+                <span class="status-dot"></span>
+                Available for work
+            </div>
+
+            <a href="#contact" class="contact-btn">
+                Get in touch <span>→</span>
+            </a>
+
+            <button class="menu-toggle" aria-label="Toggle navigation" aria-controls="navigation" aria-expanded="false"
+                type="button">☰</button>
+        </div>
+
+    </header>
+
+    <!-- SECTION 01 — HERO SECTION -->
+    <section class="hero" aria-labelledby="hero-title">
+
+        <div class="container hero-layout">
+
+            <!-- LEFT CONTENT -->
+            <div class="hero-left">
+
+                <h1 class="hero-title" id="hero-title">
+                    Designing<br>
+                    Digital Products<br>
+                    to <span class="highlight">Meet Needs</span>
+                </h1>
+
+                <p class="hero-description">
+                    I help turn business needs into thoughtful digital
+                    product experiences, from understanding the problem
+                    to designing the solution. Also make a solution to
+                    make internal company process.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="#work" class="btn btn-primary">
+                        See my Work <span>↘</span>
+                    </a>
+
+                    <a href="resume.pdf" class="btn btn-outline" download>
+                        Resume <span>↓</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT CONTENT -->
+            <div class="hero-right">
+
+                <div class="intro-badge">
+                    Maul, 5+ Years as UI/UX & Product Designer
+                </div>
+
+                <div class="hero-note">
+
+                    <h2>
+                        Product design, grounded in business.
+                    </h2>
+
+                    <p>
+                        I work across product thinking, user experience,
+                        and interface design to help shape digital
+                        products that are useful for people and
+                        effective for businesses.
+                    </p>
+
+                    <div class="note-tags">
+
+                        <span class="note-tag">Product Strategy</span>
+
+                        <span class="note-tag">UIUX Design</span>
+
+                        <span class="note-tag">Digital Product</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 02 — SELECTED WORK -->
+    <section class="selected-work" id="work">
+
+        <div class="work-container">
+
+            <!-- SECTION HEADING -->
+            <div class="work-header">
+
+                <div class="work-heading">
+                    <span class="work-eyebrow">
+                        Selected work · Project previews.
+                    </span>
+
+                    <h2>A few things I've helped shape.</h2>
+                </div>
+
+                <p class="work-intro">
+                    From mobile apps to online business systems,
+                    these previews offer a glimpse into the
+                    products and problems I've worked on.
+                </p>
+
+            </div>
+
+            <!-- PROJECT GRID -->
+            <div class="work-grid">
+
+                <!-- PROJECT 01 -->
+                <article class="work-card">
+
+                    <div class="work-card-heading">
+                        <h3>Alighty POS</h3>
+                        <span class="work-category">Retail & SaaS</span>
+                    </div>
+
+                    <p class="work-summary">
+                        A point of sale experience, built with
+                        everyday store operations and seamless
+                        customer checkout in mind.
+                    </p>
+
+                    <p class="work-description">
+                        I helped shape product experiences by
+                        understanding the needs of retail businesses
+                        and making complex daily workflows simpler,
+                        faster and more intuitive for merchants.
+                    </p>
+
+                    <div class="work-images">
+                        <img src="assets/original-1.png" alt="Alighty POS application interface" loading="lazy">
+                        <img src="assets/original-2.png" alt="Alighty POS product screens" loading="lazy">
+                    </div>
+
+                </article>
+
+                <!-- PROJECT 02 -->
+                <article class="work-card">
+
+                    <div class="work-card-heading">
+                        <h3>ODIN</h3>
+                        <span class="work-category">
+                            Transportation App
+                        </span>
+                    </div>
+
+                    <p class="work-summary">
+                        A mobility platform exploring how cities,
+                        booking flows and transportation can
+                        become more seamless.
+                    </p>
+
+                    <p class="work-description">
+                        I help design experiences that make
+                        everyday travel easier, with simple
+                        booking flows and clear interfaces
+                        for a range of users.
+                    </p>
+
+                    <div class="work-images">
+                        <img src="assets/original-3.png" alt="ODIN transportation app interface" loading="lazy">
+                        <img src="assets/original-4.png" alt="ODIN mobile application screens" loading="lazy">
+                    </div>
+
+                </article>
+
+                <!-- PROJECT 03 -->
+                <article class="work-card">
+
+                    <div class="work-card-heading">
+                        <h3>SinarPay Dashboard</h3>
+                        <span class="work-category">Fintech</span>
+                    </div>
+
+                    <p class="work-summary">
+                        A visually informative platform for
+                        managing daily business finances
+                        and transactions.
+                    </p>
+
+                    <p class="work-description">
+                        I have designed dashboards to make
+                        complex financial data understandable,
+                        supporting faster decisions
+                        and daily operations.
+                    </p>
+
+                    <div class="work-images">
+                        <img src="assets/original-5.png" alt="SinarPay financial dashboard" loading="lazy">
+                        <img src="assets/original-6.png" alt="SinarPay application screens" loading="lazy">
+                    </div>
+
+                </article>
+
+                <!-- PROJECT 04 -->
+                <article class="work-card">
+
+                    <div class="work-card-heading">
+                        <h3>AAWAY</h3>
+                        <span class="work-category">
+                            Freelance Marketplace
+                        </span>
+                    </div>
+
+                    <p class="work-summary">
+                        A visually intuitive experience
+                        for connecting freelance talent
+                        with customers.
+                    </p>
+
+                    <p class="work-description">
+                        I help design product experiences
+                        that make finding, connecting
+                        and collaborating easier
+                        for everyone involved.
+                    </p>
+
+                    <div class="work-images">
+                        <img src="assets/original-7.png" alt="AAWAY freelance marketplace" loading="lazy">
+                        <img src="assets/original-8.png" alt="AAWAY marketplace app screens" loading="lazy">
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 03 — ABOUT Me -->
+    <section class="about-section" id="about">
+
+        <div class="about-container">
+
+            <!-- ABOUT CONTENT -->
+            <div class="about-content">
+
+                <span class="about-eyebrow">
+                    A little about me
+                </span>
+
+                <h2 class="about-title">
+                    Designing with purpose,<br>
+                    building with curiosity.
+                </h2>
+
+                <p class="about-subtitle">
+                    I'm Maul, a Product Designer with a background
+                    in UI/UX design, helping turn business requirements
+                    and user needs into clear, thoughtful digital experiences.
+                </p>
+
+                <p class="about-description">
+                    Over the years, I've worked across different product types,
+                    from mobile apps to business tools. My process connects
+                    the dots between understanding problems, shaping solutions,
+                    and making ideas work through practical design.
+                </p>
+
+                <a href="#contact" class="about-cta">
+                    Get in touch
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+            </div>
+
+            <!-- SHOWCASE -->
+            <div class="about-showcase">
+
+                <div class="about-showcase-canvas">
+
+                    <!--
+          Showcase intentionally empty,
+          matching the original gray placeholder.
+
+          Add images or a video here later.
+        -->
+
+                </div>
+
+                <!-- SHOWCASE BUTTONS -->
+                <div class="about-showcase-actions">
+
+                    <a href="#work" class="about-showcase-button">
+                        Project Works
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                    <a href="#process" class="about-showcase-button">
+                        My Process
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                    <a href="#contact" class="about-showcase-button">
+                        Let's Talk
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECTION 04 — DESIGN PROCESS -->
+    <section class="process-section" id="process">
+        <div class="remaining-container">
+
+            <div class="process-header">
+                <div>
+                    <span class="remaining-eyebrow">What I do</span>
+                    <h2>From product thinking to<br>interface design.</h2>
+                </div>
+                <p>
+                    A flexible design toolkit for moving from an
+                    early idea to a more considered product experience.
+                </p>
+            </div>
+
+            <div class="process-list">
+
+                <!-- PROCESS 01 -->
+                <article class="process-item is-open">
+                    <button class="process-trigger" type="button" aria-expanded="true">
+                        <span class="process-icon">▣</span>
+                        <span class="process-info">
+                            <strong>Product Discovery & Requirements</strong>
+                            <small>
+                                Understanding users, business needs,
+                                identifying opportunities and translating
+                                challenges into clear requirements.
+                            </small>
+                        </span>
+                        <span class="process-number">01</span>
+                    </button>
+
+                    <div class="process-panel">
+                        <div class="process-images">
+                            <img src="assets/original-9.png" alt="Product discovery research" loading="lazy">
+                            <img src="assets/original-10.png" alt="Design planning" loading="lazy">
+                            <img src="assets/original-11.png" alt="Wireframe exploration" loading="lazy">
+                            <img src="assets/original-12.png" alt="Research notes" loading="lazy">
+                        </div>
+                        <p>
+                            The process begins with understanding the business context, product objectives, stakeholder
+                            expectations, and the problems the product aims to solve. This involves reviewing project
+                            briefs, gathering functional requirements, analyzing existing workflows, and identifying
+                            user pain points that may affect the overall experience.
+                        </p>
+                        <p>
+                            By breaking down business requirements into actionable design considerations, I establish a
+                            clear understanding of the product's scope, priorities, and expected outcomes. This
+                            foundation helps ensure that design decisions are driven by real needs, balancing user
+                            expectations, technical constraints, and business objectives rather than relying solely on
+                            visual preferences.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- PROCESS 02 -->
+                <article class="process-item">
+                    <button class="process-trigger" type="button" aria-expanded="false">
+                        <span class="process-icon">▤</span>
+                        <span class="process-info">
+                            <strong>User Flows & Wireframing</strong>
+                            <small>
+                                Structuring user journeys, information
+                                architecture and interaction flows.
+                            </small>
+                        </span>
+                        <span class="process-number">02</span>
+                    </button>
+                    <div class="process-panel" hidden>
+                        <div class="process-images">
+                            <img src="assets/original-9.png" alt="Product discovery research" loading="lazy">
+                            <img src="assets/original-10.png" alt="Design planning" loading="lazy">
+                            <img src="assets/original-11.png" alt="Wireframe exploration" loading="lazy">
+                            <img src="assets/original-12.png" alt="Research notes" loading="lazy">
+                        </div>
+                        <p>
+                            Once the requirements are defined, I translate them into structured user journeys,
+                            information architecture, and interaction flows that outline how users navigate through the
+                            product. This includes identifying entry points, defining decision paths, mapping system
+                            responses, and accounting for different scenarios, including empty states, errors, and
+                            alternative user actions.
+                        </p>
+                        <p>
+                            I then develop low-fidelity wireframes to establish content hierarchy, screen layouts, and
+                            the placement of key interface elements. This stage allows the product structure and
+                            usability to be evaluated early, making it easier to identify gaps, refine workflows, and
+                            align the overall experience before investing time in detailed visual design.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- PROCESS 03 -->
+                <article class="process-item">
+                    <button class="process-trigger" type="button" aria-expanded="false">
+                        <span class="process-icon">⌘</span>
+                        <span class="process-info">
+                            <strong>UI & Interaction Design</strong>
+                            <small>
+                                Crafting clear interfaces, visual components,
+                                and consistent interactions for digital products.
+                            </small>
+                        </span>
+                        <span class="process-number">03</span>
+                    </button>
+                    <div class="process-panel" hidden>
+                        <div class="process-images">
+                            <img src="assets/original-9.png" alt="Product discovery research" loading="lazy">
+                            <img src="assets/original-10.png" alt="Design planning" loading="lazy">
+                            <img src="assets/original-11.png" alt="Wireframe exploration" loading="lazy">
+                            <img src="assets/original-12.png" alt="Research notes" loading="lazy">
+                        </div>
+                        <p>
+                            With the product structure established, I transform wireframes into high-fidelity interfaces
+                            that communicate information clearly and support efficient user interactions. The process
+                            involves defining visual hierarchy, typography, color usage, spacing, layout composition,
+                            and interface states to create a cohesive experience across different screens and devices.
+                        </p>
+                        <p>
+                            I also develop reusable components, design patterns, and interface guidelines to maintain
+                            consistency throughout the product. Beyond visual appearance, I consider usability,
+                            accessibility, responsive behavior, and interaction feedback to ensure that each interface
+                            element serves a clear purpose. The result is a scalable design foundation that supports
+                            both the immediate product requirements and future development.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- PROCESS 04 -->
+                <article class="process-item">
+                    <button class="process-trigger" type="button" aria-expanded="false">
+                        <span class="process-icon">✳</span>
+                        <span class="process-info">
+                            <strong>Prototyping & Design Handoff</strong>
+                            <small>
+                                Connecting screens into interactive flows
+                                and preparing specifications for development.
+                            </small>
+                        </span>
+                        <span class="process-number">04</span>
+                    </button>
+                    <div class="process-panel" hidden>
+                        <div class="process-images">
+                            <img src="assets/original-9.png" alt="Product discovery research" loading="lazy">
+                            <img src="assets/original-10.png" alt="Design planning" loading="lazy">
+                            <img src="assets/original-11.png" alt="Wireframe exploration" loading="lazy">
+                            <img src="assets/original-12.png" alt="Research notes" loading="lazy">
+                        </div>
+                        <p>
+                            I connect interface screens into interactive prototypes to demonstrate navigation,
+                            transitions, and expected system behavior across key user journeys. These prototypes help
+                            stakeholders review the proposed experience, identify usability issues, and provide feedback
+                            before development begins. When necessary, I refine the design based on validation findings
+                            and project feedback.
+                        </p>
+                        <p>
+                            Before handoff, I organize design files, structure components, document interaction rules,
+                            define interface states, and clarify responsive behavior and relevant edge cases. I
+                            collaborate with developers to communicate design intent, resolve implementation questions,
+                            and ensure that the delivered product remains aligned with the approved design. The process
+                            continues through design reviews and implementation feedback to help maintain quality from
+                            design to release.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION 05 — EXPERIENCE -->
+    <section class="experience-section" id="experience">
+        <div class="remaining-container experience-layout">
+
+            <div class="experience-intro">
+                <span class="remaining-eyebrow">My Experience</span>
+                <h2>THE JOURNEY<br>SO FAR</h2>
+                <p>
+                    Learning, designing, and growing through
+                    real projects. My experience has grown
+                    through continuous learning, hands-on
+                    practice, and collaboration with people
+                    building digital products.
+                </p>
+            </div>
+
+            <div class="experience-timeline">
+
+                <article class="experience-item">
+                    <span class="experience-date">2022 - Present</span>
+                    <h3>Freelancing</h3>
+                    <p>
+                        As a UX designer, I work on diverse digital
+                        product types, helping shape meaningful
+                        product experiences from ideas into
+                        usable solutions.
+                    </p>
+                    <p>
+                        I collaborate with teams to understand
+                        product challenges, explore solutions,
+                        and turn complex requirements
+                        into clear experiences.
+                    </p>
+                </article>
+
+                <article class="experience-item">
+                    <span class="experience-date">2024 - 2026</span>
+                    <h3>Teknologi Digital Terdepan</h3>
+                    <p>
+                        UI/UX Designer focused on researching,
+                        designing, and improving digital experiences
+                        based on business goals and user needs.
+                    </p>
+                    <p>
+                        Working across business requirements and
+                        design systems while collaborating with
+                        teams to create functional products.
+                    </p>
+                </article>
+
+                <article class="experience-item">
+                    <span class="experience-date">2020 - 2024</span>
+                    <h3>Assistance UI/UX</h3>
+                    <p>
+                        Developing a stronger foundation in
+                        user-centered problem solving,
+                        interface design, and product thinking.
+                    </p>
+                </article>
+
+                <article class="experience-item">
+                    <span class="experience-date">2019 - 2020</span>
+                    <h3>Starting</h3>
+                    <p>
+                        Researching, learning, and practicing
+                        design fundamentals while discovering
+                        the possibilities of digital products.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION 06 — CUSTOMER REVIEWS -->
+    <section class="feedback-section" id="reviews">
+
+        <div class="remaining-container">
+
+            <div class="feedback-label">Customer Reviews</div>
+
+            <div class="feedback-stats">
+                <div class="feedback-stat">
+                    <strong>100%</strong>
+                    <span>Completed Jobs</span>
+                </div>
+
+                <div class="feedback-stat">
+                    <strong>20+</strong>
+                    <span>Shipped Projects</span>
+                </div>
+
+                <div class="feedback-stat">
+                    <strong>4.9 / 5</strong>
+                    <span>Collaboration Rating</span>
+                </div>
+            </div>
+
+            <div class="feedback-cards">
+
+                <!-- TESTIMONIAL 01 -->
+                <article class="feedback-card">
+                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>
+                        Very knowledgeable. He listened very well
+                        and I definitely would recommend
+                        working with him again.
+                    </blockquote>
+                    <div class="feedback-author">
+                        <div class="feedback-avatar">C</div>
+                        <div>
+                            <strong>Customer</strong>
+                            <small>Client Review</small>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- TESTIMONIAL 02 -->
+                <article class="feedback-card">
+                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>
+                        He is all about finding a solution for all
+                        your requirements. Very proactive.
+                        Very committed. Very good quality work.
+                        Only good things to say about his work.
+                        I will work with him again.
+                        Highly recommended.
+                    </blockquote>
+                    <div class="feedback-author">
+                        <div class="feedback-avatar">C</div>
+                        <div>
+                            <strong>Kamal Raj</strong>
+                            <small>Nuptist</small>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- TESTIMONIAL 03 -->
+                <article class="feedback-card">
+                    <div class="feedback-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>
+                        One of the best UI/UX designers.
+                        Always available, always motivated,
+                        and willing to make changes,
+                        even in a critical emergency situation.
+                        Rockstar Ahmad!
+                    </blockquote>
+                    <div class="feedback-author">
+                        <div class="feedback-avatar">C</div>
+                        <div>
+                            <strong>Christian Kai</strong>
+                            <small>Crypto Group</small>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SECTION 07 — CONTACT -->
+    <section class="final-contact" id="contact">
+
+        <div class="remaining-container final-contact-inner">
+
+            <span class="remaining-eyebrow">
+                Have a project in mind?
+            </span>
+
+            <h2>
+                Let's Build Something<br>
+                Meaningful.
+            </h2>
+
+            <p>
+                Working on a new idea, digital product or
+                improving an existing experience?
+                I'd be happy to hear what you're exploring.
+            </p>
+
+            <div class="final-contact-actions">
+
+                <a href="mailto:your-email@example.com" class="final-contact-button email">
+                    Send me email ↗
+                </a>
+
+                <a href="https://wa.me/6281234567890" class="final-contact-button whatsapp" target="_blank"
+                    rel="noopener noreferrer">
+                    WhatsApp me ↗
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SECTION 08 — FOOTER -->
+    <footer class="portfolio-footer">
+
+        <div class="remaining-container footer-content">
+
+            <div class="footer-links">
+                <span>© 2026 UI/UX Digital Works</span>
+                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="#process">Process</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <span class="footer-credit">
+                Made with care and curiosity ✦
+            </span>
+
+        </div>
+
+    </footer>
+
+    <script>
+        const menuButton = document.querySelector(".menu-toggle");
+        const navigation = document.querySelector(".nav-links");
+
+        menuButton.addEventListener("click", () => {
+            const isOpen = navigation.classList.toggle("open");
+            menuButton.setAttribute("aria-expanded", String(isOpen));
+            menuButton.textContent = isOpen ? "×" : "☰";
+        });
+
+        navigation.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navigation.classList.remove("open");
+                menuButton.setAttribute("aria-expanded", "false");
+                menuButton.textContent = "☰";
+            });
+        });
+    </script>
+
+    <script>
+
+        document.querySelectorAll(".process-trigger").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const currentItem = button.closest(".process-item");
+                const isOpen = currentItem.classList.contains("is-open");
+
+                document.querySelectorAll(".process-item").forEach(item => {
+                    item.classList.remove("is-open");
+
+                    const trigger = item.querySelector(".process-trigger");
+                    const panel = item.querySelector(".process-panel");
+
+                    trigger.setAttribute("aria-expanded", "false");
+                    panel.hidden = true;
+                });
+
+                if (!isOpen) {
+                    currentItem.classList.add("is-open");
+
+                    button.setAttribute("aria-expanded", "true");
+
+                    currentItem.querySelector(".process-panel").hidden = false;
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
